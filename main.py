@@ -78,7 +78,12 @@ def edit_post(post_id):
         return redirect(url_for('show_post', post_id=post.id))
     return render_template('make-post.html', form=edit_form, is_edit=True, post=post)
 
-
+@app.route('/delete/<int:post_id>')
+def delete_post(post_id):
+    post = BlogPost.query.get(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('get_all_posts'))
 
 @app.route('/about')
 def about():
